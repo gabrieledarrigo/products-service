@@ -20,12 +20,12 @@ As a client of the e-commerce platform, I want to create a new product so that i
 
 **Acceptance Scenarios**:
 
-1. **Given** a valid product payload with name, productToken (UUID v4), price, and stock, **When** the client sends a POST request to `/products`, **Then** the system returns a `201 Created` response with the complete product including `id`, `createdAt`, and `updatedAt` timestamps.
-2. **Given** a product payload missing the required `name` field, **When** the client sends a POST request to `/products`, **Then** the system returns a `400 Bad Request` response with an error message.
-3. **Given** a product payload with an empty `name` field, **When** the client sends a POST request to `/products`, **Then** the system returns a `400 Bad Request` response.
-4. **Given** a product payload with a negative `price`, **When** the client sends a POST request to `/products`, **Then** the system returns a `400 Bad Request` response.
-5. **Given** a product payload with a negative `stock` value, **When** the client sends a POST request to `/products`, **Then** the system returns a `400 Bad Request` response.
-6. **Given** a product payload with an invalid `productToken` (not UUID v4), **When** the client sends a POST request to `/products`, **Then** the system returns a `400 Bad Request` response.
+1. **Given** a valid product payload with name, productToken (UUID v4), price, and stock, **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `201 Created` response with the complete product including `id`, `createdAt`, and `updatedAt` timestamps.
+2. **Given** a product payload missing the required `name` field, **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `400 Bad Request` response with an error message.
+3. **Given** a product payload with an empty `name` field, **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `400 Bad Request` response.
+4. **Given** a product payload with a negative `price`, **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `400 Bad Request` response.
+5. **Given** a product payload with a negative `stock` value, **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `400 Bad Request` response.
+6. **Given** a product payload with an invalid `productToken` (not UUID v4), **When** the client sends a POST request to `/api/v1/products`, **Then** the system returns a `400 Bad Request` response.
 7. **Given** a product with a specific `productToken` already exists, **When** the client sends a POST request with the same `productToken`, **Then** the system returns a `409 Conflict` response.
 
 ---
@@ -40,14 +40,14 @@ As a client of the e-commerce platform, I want to retrieve a paginated list of p
 
 **Acceptance Scenarios**:
 
-1. **Given** multiple products exist, **When** the client sends a GET request to `/products` without pagination parameters, **Then** the system returns the first page with up to 20 products, along with `totalItems`, `currentPage`, `totalPages`, and `limit` metadata.
-2. **Given** multiple products exist, **When** the client sends a GET request to `/products?page=2&limit=5`, **Then** the system returns the second page with up to 5 products and correct pagination metadata.
-3. **Given** no products exist, **When** the client sends a GET request to `/products`, **Then** the system returns a `200 OK` response with an empty `products` array and `totalItems` of 0.
+1. **Given** multiple products exist, **When** the client sends a GET request to `/api/v1/products` without pagination parameters, **Then** the system returns the first page with up to 20 products, along with `totalItems`, `currentPage`, `totalPages`, and `limit` metadata.
+2. **Given** multiple products exist, **When** the client sends a GET request to `/api/v1/products?page=2&limit=5`, **Then** the system returns the second page with up to 5 products and correct pagination metadata.
+3. **Given** no products exist, **When** the client sends a GET request to `/api/v1/products`, **Then** the system returns a `200 OK` response with an empty `products` array and `totalItems` of 0.
 4. **Given** products exist, **When** the client sends a GET request with `page` exceeding total pages, **Then** the system returns a `200 OK` response with an empty `products` array.
 5. **Given** the client sends `limit=0` or `limit=-1`, **When** the request is processed, **Then** the system returns a `400 Bad Request` response.
 6. **Given** the client sends `limit=101` (exceeding maximum), **When** the request is processed, **Then** the system returns a `400 Bad Request` response.
 7. **Given** the client sends `page=0` or `page=-1`, **When** the request is processed, **Then** the system returns a `400 Bad Request` response.
-8. **Given** some products have been soft-deleted, **When** the client sends a GET request to `/products`, **Then** the soft-deleted products are excluded from the results and from `totalItems`.
+8. **Given** some products have been soft-deleted, **When** the client sends a GET request to `/api/v1/products`, **Then** the soft-deleted products are excluded from the results and from `totalItems`.
 
 ---
 
@@ -61,9 +61,9 @@ As a client of the e-commerce platform, I want to retrieve a specific product by
 
 **Acceptance Scenarios**:
 
-1. **Given** a product with a specific `id` exists, **When** the client sends a GET request to `/products/:id`, **Then** the system returns a `200 OK` response with the complete product details.
-2. **Given** no product exists with the specified `id`, **When** the client sends a GET request to `/products/:id`, **Then** the system returns a `404 Not Found` response.
-3. **Given** a product with the specified `id` has been soft-deleted, **When** the client sends a GET request to `/products/:id`, **Then** the system returns a `404 Not Found` response.
+1. **Given** a product with a specific `id` exists, **When** the client sends a GET request to `/api/v1/products/:id`, **Then** the system returns a `200 OK` response with the complete product details.
+2. **Given** no product exists with the specified `id`, **When** the client sends a GET request to `/api/v1/products/:id`, **Then** the system returns a `404 Not Found` response.
+3. **Given** a product with the specified `id` has been soft-deleted, **When** the client sends a GET request to `/api/v1/products/:id`, **Then** the system returns a `404 Not Found` response.
 
 ---
 
@@ -77,11 +77,11 @@ As a client of the e-commerce platform, I want to update the stock quantity of a
 
 **Acceptance Scenarios**:
 
-1. **Given** a product with a specific `id` exists, **When** the client sends a PUT request to `/products/:id/stock` with a valid `stock` value, **Then** the system returns a `200 OK` response with the updated product, and the `updatedAt` timestamp reflects the change.
+1. **Given** a product with a specific `id` exists, **When** the client sends a PUT request to `/api/v1/products/:id/stock` with a valid `stock` value, **Then** the system returns a `200 OK` response with the updated product, and the `updatedAt` timestamp reflects the change.
 2. **Given** a product exists, **When** the client sends a PUT request with a negative `stock` value, **Then** the system returns a `400 Bad Request` response.
 3. **Given** a product exists, **When** the client sends a PUT request without the `stock` field, **Then** the system returns a `400 Bad Request` response.
-4. **Given** no product exists with the specified `id`, **When** the client sends a PUT request to `/products/:id/stock`, **Then** the system returns a `404 Not Found` response.
-5. **Given** a product with the specified `id` has been soft-deleted, **When** the client sends a PUT request to `/products/:id/stock`, **Then** the system returns a `404 Not Found` response.
+4. **Given** no product exists with the specified `id`, **When** the client sends a PUT request to `/api/v1/products/:id/stock`, **Then** the system returns a `404 Not Found` response.
+5. **Given** a product with the specified `id` has been soft-deleted, **When** the client sends a PUT request to `/api/v1/products/:id/stock`, **Then** the system returns a `404 Not Found` response.
 
 ---
 
@@ -95,9 +95,9 @@ As a client of the e-commerce platform, I want to soft-delete a product so that 
 
 **Acceptance Scenarios**:
 
-1. **Given** a product with a specific `id` exists, **When** the client sends a DELETE request to `/products/:id`, **Then** the system returns a `204 No Content` response, and the product's `deletedAt` field is set.
-2. **Given** a product with the specified `id` has already been soft-deleted, **When** the client sends a DELETE request to `/products/:id`, **Then** the system returns a `204 No Content` response (idempotent behavior).
-3. **Given** no product exists with the specified `id`, **When** the client sends a DELETE request to `/products/:id`, **Then** the system returns a `204 No Content` response (idempotent behavior).
+1. **Given** a product with a specific `id` exists, **When** the client sends a DELETE request to `/api/v1/products/:id`, **Then** the system returns a `204 No Content` response, and the product's `deletedAt` field is set.
+2. **Given** a product with the specified `id` has already been soft-deleted, **When** the client sends a DELETE request to `/api/v1/products/:id`, **Then** the system returns a `204 No Content` response (idempotent behavior).
+3. **Given** no product exists with the specified `id`, **When** the client sends a DELETE request to `/api/v1/products/:id`, **Then** the system returns a `204 No Content` response (idempotent behavior).
 
 ---
 

@@ -25,14 +25,14 @@
 
 **Purpose**: Project initialization, tooling, and development environment
 
-- [ ] T001 Initialize NestJS project with TypeScript and install all production and dev dependencies per plan.md
-- [ ] T002 [P] Configure tsconfig.json with strict mode enabled
-- [ ] T003 [P] Configure ESLint and Prettier with project rules
-- [ ] T004 [P] Create docker-compose.yml with MySQL service for local development and testing
-- [ ] T005 [P] Create .env and .env.example with environment variables (NODE_ENV, APP_ENV, PORT, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME)
-- [ ] T006 [P] Configure nest-cli.json with @nestjs/swagger CLI plugin and introspectComments option
-- [ ] T007 [P] Configure husky and lint-staged for pre-commit linting and formatting checks
-- [ ] T008 [P] Configure Jest with clearMocks, resetMocks, restoreMocks, and npm scripts (test, test:unit, test:e2e, test:watch) in package.json
+- [X] T001 Initialize NestJS project with TypeScript and install all production and dev dependencies per plan.md
+- [X] T002 [P] Configure tsconfig.json with strict mode enabled
+- [X] T003 [P] Configure ESLint and Prettier with project rules
+- [X] T004 [P] Create docker-compose.yml with MySQL service for local development and testing
+- [X] T005 [P] Create .env and .env.example with environment variables (NODE_ENV, APP_ENV, PORT, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME)
+- [X] T006 [P] Configure nest-cli.json with @nestjs/swagger CLI plugin and introspectComments option
+- [X] T007 [P] Configure husky and lint-staged for pre-commit linting and formatting checks
+- [X] T008 [P] Configure Jest with clearMocks, resetMocks, restoreMocks, and npm scripts (test, test:unit, test:e2e, test:watch) in package.json
 
 ---
 
@@ -51,7 +51,7 @@
 - [ ] T015 Create ProductsService skeleton class with injected Product model in src/products/products.service.ts
 - [ ] T016 Create ProductsController skeleton class with injected ProductsService in src/products/products.controller.ts
 - [ ] T017 Create ProductsModule wiring ProductsController, ProductsService, and SequelizeModule.forFeature([Product]) in src/products/products.module.ts
-- [ ] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in src/products/products.controller.spec.ts
+- [ ] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in e2e/products.spec.ts
 - [ ] T019 [P] Setup unit test file with mocked Product model using createMock and NestJS Test.createTestingModule in src/products/products.service.spec.ts
 - [ ] T020 [P] Configure GitHub Actions CI workflow (install, build, test, lint, format) in .github/workflows/ci.yml
 
@@ -70,7 +70,7 @@
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T021 [P] [US1] Write unit tests for ProductsService.create: valid creation, duplicate productToken (ConflictException) in src/products/products.service.spec.ts
-- [ ] T022 [P] [US1] Write e2e tests for POST /api/v1/products: valid creation (201), missing fields (400), empty name (400), negative price (400), price exceeding decimal(10,4) max (400), negative stock (400), invalid UUID (400), duplicate productToken (409) in src/products/products.controller.spec.ts
+- [ ] T022 [P] [US1] Write e2e tests for POST /api/v1/products: valid creation (201), missing fields (400), empty name (400), negative price (400), price exceeding decimal(10,4) max (400), negative stock (400), invalid UUID (400), duplicate productToken (409) in e2e/products.spec.ts
 
 ### Implementation for User Story 1
 
@@ -93,7 +93,7 @@
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T026 [P] [US2] Write unit tests for ProductsService.findAll: returns paginated results, correct totalItems/totalPages, default page/limit, empty results in src/products/products.service.spec.ts
-- [ ] T027 [P] [US2] Write e2e tests for GET /api/v1/products: default pagination (200), custom page/limit (200), empty list (200), page exceeding total (200 empty), invalid limit (400), invalid page (400), excludes soft-deleted (200) in src/products/products.controller.spec.ts
+- [ ] T027 [P] [US2] Write e2e tests for GET /api/v1/products: default pagination (200), custom page/limit (200), empty list (200), page exceeding total (200 empty), invalid limit (400), invalid page (400), excludes soft-deleted (200) in e2e/products.spec.ts
 
 ### Implementation for User Story 2
 
@@ -116,7 +116,7 @@
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T031 [P] [US3] Write unit tests for ProductsService.findOne: product found, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
-- [ ] T032 [P] [US3] Write e2e tests for GET /api/v1/products/:id: existing product (200), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in src/products/products.controller.spec.ts
+- [ ] T032 [P] [US3] Write e2e tests for GET /api/v1/products/:id: existing product (200), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
 
 ### Implementation for User Story 3
 
@@ -138,7 +138,7 @@
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T035 [P] [US4] Write unit tests for ProductsService.updateStock: successful update with updatedAt change, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
-- [ ] T036 [P] [US4] Write e2e tests for PUT /api/v1/products/:id/stock: valid update (200), stock=0 boundary value (200), negative stock (400), missing stock field (400), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in src/products/products.controller.spec.ts
+- [ ] T036 [P] [US4] Write e2e tests for PUT /api/v1/products/:id/stock: valid update (200), stock=0 boundary value (200), negative stock (400), missing stock field (400), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
 
 ### Implementation for User Story 4
 
@@ -161,7 +161,7 @@
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
 - [ ] T040 [P] [US5] Write unit tests for ProductsService.remove: successful soft-delete, already-deleted product (idempotent 204), non-existent product (idempotent 204) in src/products/products.service.spec.ts
-- [ ] T041 [P] [US5] Write e2e tests for DELETE /api/v1/products/:id: existing product (204), already-deleted product (204), non-existent product (204), invalid id format e.g. string (400), verify product excluded from GET after delete in src/products/products.controller.spec.ts
+- [ ] T041 [P] [US5] Write e2e tests for DELETE /api/v1/products/:id: existing product (204), already-deleted product (204), non-existent product (204), invalid id format e.g. string (400), verify product excluded from GET after delete in e2e/products.spec.ts
 
 ### Implementation for User Story 5
 

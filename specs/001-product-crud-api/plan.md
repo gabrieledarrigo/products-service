@@ -69,15 +69,17 @@ src/
 │   ├── dtos/
 │   │   ├── products.request.dto.ts # CreateProductRequestDto, UpdateProductStockRequestDto, GetProductsQueryDto
 │   │   └── products.response.dto.ts# ProductResponseDto, PaginationResponseDto
-│   ├── products.controller.spec.ts # E2E tests
-│   └── products.service.spec.ts    # Unit tests
+│   └── products.service.spec.ts    # Unit tests (co-located)
 ├── test-utils/
 │   └── create-mock.ts              # PartialDeep + createMock utility
 ├── main.ts                         # Bootstrap, ValidationPipe, versioning, Swagger
 └── app.module.ts                   # Root module with ConfigModule + SequelizeModule
+
+e2e/
+└── products.spec.ts            # E2E tests (testcontainers + supertest)
 ```
 
-**Structure Decision**: Single NestJS project with a flat `src/products/` module. Tests co-located with source files (`.spec.ts` suffix). This follows NestJS conventions and the constitution's simplicity principle.
+**Structure Decision**: Single NestJS project with a flat `src/products/` module. Unit tests co-located with source files (`.spec.ts` suffix). E2E tests live in a root-level `e2e/` directory (`.spec.ts` suffix), separated from source code. Jest is configured with two projects (`unit` and `e2e`).
 
 ## Complexity Tracking
 

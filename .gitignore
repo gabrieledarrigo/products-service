@@ -1,0 +1,21 @@
+node_modules/
+dist/
+build/
+coverage/
+*.log
+*.tsbuildinfo
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+
+# Editor directories
+.vscode/
+.idea/

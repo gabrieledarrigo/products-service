@@ -1,0 +1,92 @@
+{
+  "name": "products-service",
+  "version": "1.0.0",
+  "description": "products-service is a RESTful CRUD API for managing products in an e-commerce platform.",
+  "main": "dist/main.js",
+  "scripts": {
+    "prebuild": "rm -rf dist",
+    "build": "nest build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/main",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --check src/**/*.ts",
+    "format:fix": "prettier --write src/**/*.ts",
+    "test": "jest",
+    "test:unit": "jest --selectProjects unit",
+    "test:e2e": "jest --selectProjects e2e",
+    "test:watch": "jest --watch",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabrieledarrigo/products-service.git"
+  },
+  "keywords": [
+    "products",
+    "service",
+    "nestjs",
+    "typescript",
+    "sequelize",
+    "mysql",
+    "rest",
+    "api"
+  ],
+  "author": "Gabriele D'Arrigo, <darrigo.g@gmail.com>",
+  "license": "UNLICENSED",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/gabrieledarrigo/products-service/issues"
+  },
+  "homepage": "https://github.com/gabrieledarrigo/products-service#readme",
+  "dependencies": {
+    "@nestjs/common": "^11.1.26",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.1.26",
+    "@nestjs/platform-express": "^11.1.26",
+    "@nestjs/sequelize": "^11.0.1",
+    "@nestjs/swagger": "^11.4.4",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "mysql2": "^3.22.5",
+    "nestjs-pino": "^4.6.1",
+    "pino-http": "^11.0.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "sequelize": "^6.37.8",
+    "sequelize-typescript": "^2.1.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^11.0.23",
+    "@nestjs/schematics": "^11.1.0",
+    "@nestjs/testing": "^11.1.26",
+    "@testcontainers/mysql": "^12.0.1",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.9.3",
+    "@types/sequelize": "^4.28.20",
+    "@types/supertest": "^7.2.0",
+    "eslint": "^10.4.1",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "jest": "^30.4.2",
+    "lint-staged": "^17.0.7",
+    "pino-pretty": "^13.1.3",
+    "prettier": "^3.8.4",
+    "supertest": "^7.2.2",
+    "testcontainers": "^12.0.1",
+    "ts-jest": "^29.4.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0"
+  }
+}

@@ -234,7 +234,13 @@ Log levels:
 
 Testing are written with Jest and `@nestjs/testing`. Jest is configured to clean, reset and restore mocks between each test globally. Every test file is named with the `.spec.ts` suffix and is located in the same directory as the file it tests.
 
-Tests follow a clear _arrange_, _act_, _assert_ structure. Test structure uses one `describe` block per method with multiple `it` blocks for different test cases. For mocking objects, instead of casting, use the following utility:
+Tests follow a clear _arrange_, _act_, _assert_ structure. Test structure uses one `describe` block per method with multiple `it` blocks for different test cases. Jest globals (`describe`, `it`, `expect`, `beforeAll`, `beforeEach`, `afterAll`, `afterEach`, `jest`) must be explicitly imported from `@jest/globals` instead of relying on ambient global types:
+
+```typescript
+import { describe, it, expect, beforeEach } from '@jest/globals';
+```
+
+For mocking objects, instead of casting, use the following utility:
 
 ```typescript
 export type PartialDeep<T> = T extends object

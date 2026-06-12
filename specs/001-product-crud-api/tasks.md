@@ -42,18 +42,18 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T009 Create AppModule with ConfigModule (.env loading) and SequelizeModule.forRoot (MySQL, synchronize: true) in src/app.module.ts
-- [ ] T010 Configure main.ts bootstrap with global ValidationPipe (whitelist, transform), URI versioning (prefix: api, defaultVersion: 1), SwaggerModule (/docs, /docs-json), and nestjs-pino logger in src/main.ts
-- [ ] T011 [P] Create Product Sequelize model with all fields, paranoid: true, timestamps: true, and unique index on productToken in src/products/products.model.ts
-- [ ] T012 [P] Create createMock test utility (PartialDeep type + createMock function) in src/test-utils/create-mock.ts
-- [ ] T013 Create ProductResponseDto with constructor mapping from Product model in src/products/dtos/products.response.dto.ts
-- [ ] T014 Create PaginationResponseDto with products array, totalItems, currentPage, totalPages, and limit in src/products/dtos/products.response.dto.ts
-- [ ] T015 Create ProductsService skeleton class with injected Product model in src/products/products.service.ts
-- [ ] T016 Create ProductsController skeleton class with injected ProductsService in src/products/products.controller.ts
-- [ ] T017 Create ProductsModule wiring ProductsController, ProductsService, and SequelizeModule.forFeature([Product]) in src/products/products.module.ts
-- [ ] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in e2e/products.spec.ts
-- [ ] T019 [P] Setup unit test file with mocked Product model using createMock and NestJS Test.createTestingModule in src/products/products.service.spec.ts
-- [ ] T020 [P] Configure GitHub Actions CI workflow (install, build, test, lint, format) in .github/workflows/ci.yml
+- [X] T009 Create AppModule with ConfigModule (.env loading) and SequelizeModule.forRoot (MySQL, synchronize: true) in src/app.module.ts
+- [X] T010 Configure main.ts bootstrap with global ValidationPipe (whitelist, transform), URI versioning (prefix: api, defaultVersion: 1), SwaggerModule (/docs, /docs-json), and nestjs-pino logger in src/main.ts
+- [X] T011 [P] Create Product Sequelize model with all fields, paranoid: true, timestamps: true, and unique index on productToken in src/products/products.model.ts
+- [X] T012 [P] Create createMock test utility (PartialDeep type + createMock function) in src/test-utils/create-mock.ts
+- [X] T013 Create ProductResponseDto with constructor mapping from Product model in src/products/dtos/products.response.dto.ts
+- [X] T014 Create PaginationResponseDto with products array, totalItems, currentPage, totalPages, and limit in src/products/dtos/products.response.dto.ts
+- [X] T015 Create ProductsService skeleton class with injected Product model in src/products/products.service.ts
+- [X] T016 Create ProductsController skeleton class with injected ProductsService in src/products/products.controller.ts
+- [X] T017 Create ProductsModule wiring ProductsController, ProductsService, and SequelizeModule.forFeature([Product]) in src/products/products.module.ts
+- [X] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in e2e/products.spec.ts
+- [X] T019 [P] Setup unit test file with mocked Product model using createMock and NestJS Test.createTestingModule in src/products/products.service.spec.ts
+- [X] T020 [P] Configure GitHub Actions CI workflow (install, build, test, lint, format) in .github/workflows/ci.yml
 
 **Checkpoint**: Foundation ready — user story implementation can now begin
 

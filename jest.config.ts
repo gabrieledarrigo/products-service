@@ -20,7 +20,7 @@ const config: Config = {
       displayName: 'e2e',
       moduleFileExtensions: ['ts', 'js', 'json'],
       rootDir: 'e2e',
-      testRegex: '.*\\.e2e-spec\\.ts$',
+      testRegex: '.*\\.spec\\.ts$',
       transform: {
         '^.+\\.ts$': ['ts-jest', { tsconfig: 'tsconfig.e2e.json' }],
       },

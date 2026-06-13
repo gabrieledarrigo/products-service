@@ -161,6 +161,8 @@ Migrations are configured in NestJS with `synchronization` enabled.
 
 Request DTOs use `class-validator` decorators to enforce validation rules on incoming request payloads. Request DTOS don't provide a constructor, and every mandatory property is marked with the `!` operator to indicate that it will be initialized by the framework during validation.
 
+All DTO properties (both request and response) MUST be declared `readonly`. DTOs are immutable data carriers — once populated by the framework (request DTOs) or the mapping constructor (response DTOs), their properties must not be reassigned.
+
 Response DTOs are simple classes with a constructor that receives the domain model and maps its properties to the response format. This approach ensures that the response structure is consistent and decoupled from the internal domain model, allowing for flexibility in how data is presented to clients.
 
 These are the DTOs used in the service:

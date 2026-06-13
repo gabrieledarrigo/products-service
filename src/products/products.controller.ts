@@ -1,15 +1,23 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ProductsService } from './products.service';
+import { CreateProductRequestDto } from './dtos/products.request.dto';
+import { ProductResponseDto } from './dtos/products.response.dto';
 
 /**
- * REST controller for product endpoints.
- *
- * Handles HTTP requests, delegates business logic to ProductsService,
- * and returns appropriate responses. Keeps controller logic thin
- * per the convention-over-configuration principle.
+ * Handle HTTP requests related to products.
  */
 @Controller('products')
 export class ProductsController {
-  // @ts-expect-error: used in Phase 3 when controller endpoints are implemented
   constructor(private readonly productsService: ProductsService) {}
+
+  /**
+   * Creates a new product.
+   *
+   * @param dto - The validated product creation payload.
+   * @returns The created product as a response DTO.
+   */
+  @Post()
+  create(@Body() dto: CreateProductRequestDto): Promise<ProductResponseDto> {
+    return this.productsService.create(dto);
+  }
 }

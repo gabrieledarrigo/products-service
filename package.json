@@ -16,7 +16,7 @@
     "format:fix": "prettier --write src/**/*.ts",
     "test": "jest",
     "test:unit": "jest --selectProjects unit",
-    "test:e2e": "jest --selectProjects e2e",
+    "test:e2e": "jest --selectProjects e2e --runInBand --forceExit",
     "test:watch": "jest --watch",
     "prepare": "husky"
   },

@@ -25,14 +25,14 @@
 
 **Purpose**: Project initialization, tooling, and development environment
 
-- [X] T001 Initialize NestJS project with TypeScript and install all production and dev dependencies per plan.md
-- [X] T002 [P] Configure tsconfig.json with strict mode enabled
-- [X] T003 [P] Configure ESLint and Prettier with project rules
-- [X] T004 [P] Create docker-compose.yml with MySQL service for local development and testing
-- [X] T005 [P] Create .env and .env.example with environment variables (NODE_ENV, APP_ENV, PORT, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME)
-- [X] T006 [P] Configure nest-cli.json with @nestjs/swagger CLI plugin and introspectComments option
-- [X] T007 [P] Configure husky and lint-staged for pre-commit linting and formatting checks
-- [X] T008 [P] Configure Jest with clearMocks, resetMocks, restoreMocks, and npm scripts (test, test:unit, test:e2e, test:watch) in package.json
+- [x] T001 Initialize NestJS project with TypeScript and install all production and dev dependencies per plan.md
+- [x] T002 [P] Configure tsconfig.json with strict mode enabled
+- [x] T003 [P] Configure ESLint and Prettier with project rules
+- [x] T004 [P] Create docker-compose.yml with MySQL service for local development and testing
+- [x] T005 [P] Create .env and .env.example with environment variables (NODE_ENV, APP_ENV, PORT, DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_NAME)
+- [x] T006 [P] Configure nest-cli.json with @nestjs/swagger CLI plugin and introspectComments option
+- [x] T007 [P] Configure husky and lint-staged for pre-commit linting and formatting checks
+- [x] T008 [P] Configure Jest with clearMocks, resetMocks, restoreMocks, and npm scripts (test, test:unit, test:e2e, test:watch) in package.json
 
 ---
 
@@ -42,18 +42,18 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [X] T009 Create AppModule with ConfigModule (.env loading) and SequelizeModule.forRoot (MySQL, synchronize: true) in src/app.module.ts
-- [X] T010 Configure main.ts bootstrap with global ValidationPipe (whitelist, transform), URI versioning (prefix: api, defaultVersion: 1), SwaggerModule (/docs, /docs-json), and nestjs-pino logger in src/main.ts
-- [X] T011 [P] Create Product Sequelize model with all fields, paranoid: true, timestamps: true, and unique index on productToken in src/products/products.model.ts
-- [X] T012 [P] Create createMock test utility (PartialDeep type + createMock function) in src/test-utils/create-mock.ts
-- [X] T013 Create ProductResponseDto with constructor mapping from Product model in src/products/dtos/products.response.dto.ts
-- [X] T014 Create PaginationResponseDto with products array, totalItems, currentPage, totalPages, and limit in src/products/dtos/products.response.dto.ts
-- [X] T015 Create ProductsService skeleton class with injected Product model in src/products/products.service.ts
-- [X] T016 Create ProductsController skeleton class with injected ProductsService in src/products/products.controller.ts
-- [X] T017 Create ProductsModule wiring ProductsController, ProductsService, and SequelizeModule.forFeature([Product]) in src/products/products.module.ts
-- [X] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in e2e/products.spec.ts
-- [X] T019 [P] Setup unit test file with mocked Product model using createMock and NestJS Test.createTestingModule in src/products/products.service.spec.ts
-- [X] T020 [P] Configure GitHub Actions CI workflow (install, build, test, lint, format) in .github/workflows/ci.yml
+- [x] T009 Create AppModule with ConfigModule (.env loading) and SequelizeModule.forRoot (MySQL, synchronize: true) in src/app.module.ts
+- [x] T010 Configure main.ts bootstrap with global ValidationPipe (whitelist, transform), URI versioning (prefix: api, defaultVersion: 1), SwaggerModule (/docs, /docs-json), and nestjs-pino logger in src/main.ts
+- [x] T011 [P] Create Product Sequelize model with all fields, paranoid: true, timestamps: true, and unique index on productToken in src/products/products.model.ts
+- [x] T012 [P] Create createMock test utility (PartialDeep type + createMock function) in src/test-utils/create-mock.ts
+- [x] T013 Create ProductResponseDto with constructor mapping from Product model in src/products/dtos/products.response.dto.ts
+- [x] T014 Create PaginationResponseDto with products array, totalItems, currentPage, totalPages, and limit in src/products/dtos/products.response.dto.ts
+- [x] T015 Create ProductsService skeleton class with injected Product model in src/products/products.service.ts
+- [x] T016 Create ProductsController skeleton class with injected ProductsService in src/products/products.controller.ts
+- [x] T017 Create ProductsModule wiring ProductsController, ProductsService, and SequelizeModule.forFeature([Product]) in src/products/products.module.ts
+- [x] T018 [P] Setup e2e test file with testcontainers MySQL bootstrap (beforeAll), NestJS app initialization, and table truncation (afterEach) in e2e/products.spec.ts
+- [x] T019 [P] Setup unit test file with mocked Product model using createMock and NestJS Test.createTestingModule in src/products/products.service.spec.ts
+- [x] T020 [P] Configure GitHub Actions CI workflow (install, build, test, lint, format) in .github/workflows/ci.yml
 
 **Checkpoint**: Foundation ready — user story implementation can now begin
 
@@ -69,14 +69,14 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T021 [P] [US1] Write unit tests for ProductsService.create: valid creation, duplicate productToken (ConflictException) in src/products/products.service.spec.ts
-- [ ] T022 [P] [US1] Write e2e tests for POST /api/v1/products: valid creation (201), missing fields (400), empty name (400), negative price (400), price exceeding decimal(10,4) max (400), negative stock (400), invalid UUID (400), duplicate productToken (409) in e2e/products.spec.ts
+- [x] T021 [P] [US1] Write unit tests for ProductsService.create: valid creation, duplicate productToken (ConflictException) in src/products/products.service.spec.ts
+- [x] T022 [P] [US1] Write e2e tests for POST /api/v1/products: valid creation (201), missing fields (400), empty name (400), negative price (400), price exceeding decimal(10,4) max (400), negative stock (400), invalid UUID (400), duplicate productToken (409) in e2e/products.spec.ts
 
 ### Implementation for User Story 1
 
-- [ ] T023 [P] [US1] Create CreateProductRequestDto with @IsString, @IsNotEmpty, @IsUUID('4'), @IsNumber({maxDecimalPlaces:4}), @Min(0), @Max(999999.9999), @IsInt decorators in src/products/dtos/products.request.dto.ts
-- [ ] T024 [US1] Implement create method in ProductsService: persist product, catch unique constraint violation and throw ConflictException in src/products/products.service.ts
-- [ ] T025 [US1] Implement POST /products endpoint in ProductsController: accept CreateProductRequestDto body, delegate to service, return 201 with ProductResponseDto in src/products/products.controller.ts
+- [x] T023 [P] [US1] Create CreateProductRequestDto with @IsString, @IsNotEmpty, @IsUUID('4'), @IsNumber({maxDecimalPlaces:4}), @Min(0), @Max(999999.9999), @IsInt decorators in src/products/dtos/products.request.dto.ts
+- [x] T024 [US1] Implement create method in ProductsService: persist product, catch unique constraint violation and throw ConflictException in src/products/products.service.ts
+- [x] T025 [US1] Implement POST /products endpoint in ProductsController: accept CreateProductRequestDto body, delegate to service, return 201 with ProductResponseDto in src/products/products.controller.ts
 
 **Checkpoint**: User Story 1 is fully functional — product creation works end-to-end with validation and conflict detection
 

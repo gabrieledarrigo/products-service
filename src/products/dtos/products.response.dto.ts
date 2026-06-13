@@ -1,32 +1,40 @@
 import { Product } from '../products.model';
 
-/**
- * Response DTO for a single product.
- *
- * Maps the internal Product model to the client-facing response format,
- * decoupling the API contract from the database entity.
- */
 export class ProductResponseDto {
-  /** Auto-incremented unique identifier. */
-  id: number;
+  /**
+   * Auto-incremented unique identifier.
+   */
+  readonly id: number;
 
-  /** Client-provided UUID v4 token. */
-  productToken: string;
+  /**
+   * Client-provided UUID v4 token.
+   */
+  readonly productToken: string;
 
-  /** Product display name. */
-  name: string;
+  /**
+   * Product display name.
+   */
+  readonly name: string;
 
-  /** Unit price with up to 4 decimal places. */
-  price: number;
+  /**
+   * Unit price with up to 4 decimal places.
+   */
+  readonly price: number;
 
-  /** Available inventory quantity. */
-  stock: number;
+  /**
+   * Available inventory quantity.
+   */
+  readonly stock: number;
 
-  /** Timestamp when the product was created. */
-  createdAt: Date;
+  /**
+   * Timestamp when the product was created.
+   */
+  readonly createdAt: Date;
 
-  /** Timestamp when the product was last updated. */
-  updatedAt: Date;
+  /**
+   * Timestamp when the product was last updated.
+   */
+  readonly updatedAt: Date;
 
   /**
    * @param product - The Product model instance to map from.
@@ -42,26 +50,31 @@ export class ProductResponseDto {
   }
 }
 
-/**
- * Response DTO for a paginated list of products.
- *
- * Wraps an array of ProductResponseDto with pagination metadata.
- */
 export class PaginationResponseDto {
-  /** Array of product response objects. */
-  products: ProductResponseDto[];
+  /**
+   * Array of product response objects.
+   */
+  readonly products: ProductResponseDto[];
 
-  /** Total number of products matching the query (excluding soft-deleted). */
-  totalItems: number;
+  /**
+   * Total number of products matching the query (excluding soft-deleted).
+   */
+  readonly totalItems: number;
 
-  /** Current page number. */
-  currentPage: number;
+  /**
+   * Current page number.
+   */
+  readonly currentPage: number;
 
-  /** Total number of pages. */
-  totalPages: number;
+  /**
+   * Total number of pages.
+   */
+  readonly totalPages: number;
 
-  /** Number of products per page. */
-  limit: number;
+  /**
+   * Number of products per page.
+   */
+  readonly limit: number;
 
   /**
    * @param products - Array of ProductResponseDto objects for the current page.

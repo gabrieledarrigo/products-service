@@ -1,4 +1,4 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UniqueConstraintError } from 'sequelize';
 import { Product } from './products.model';
@@ -55,5 +55,22 @@ export class ProductsService {
     const products = rows.map((product) => new ProductResponseDto(product));
 
     return new PaginationResponseDto(products, count, page, limit);
+  }
+
+  /**
+   * Retrieves a single active product by its identifier.
+   *
+   * @param id - The product identifier.
+   * @returns The product as a response DTO.
+   * @throws NotFoundException when no active product exists with the given id.
+   */
+  async findOne(id: number): Promise<ProductResponseDto> {
+    const product = await this.productModel.findByPk(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    return new ProductResponseDto(product);
   }
 }

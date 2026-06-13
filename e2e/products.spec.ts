@@ -255,4 +255,51 @@ describe('Products (e2e)', () => {
       expect(response.body.products).toHaveLength(2);
     });
   });
+
+  describe('GET /api/v1/products/:id', () => {
+    const buildProduct = (overrides: Partial<Product> = {}): Partial<Product> => ({
+      name: 'Widget Pro',
+      productToken: randomUUID(),
+      price: 29.99,
+      stock: 100,
+      ...overrides,
+    });
+
+    it('should return the product when it exists', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer()).get(`/api/v1/products/${product.id}`);
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        id: product.id,
+        name: 'Widget Pro',
+        productToken: product.productToken,
+        stock: 100,
+      });
+      expect(response.body.createdAt).toBeDefined();
+      expect(response.body.updatedAt).toBeDefined();
+    });
+
+    it('should return 404 when the product does not exist', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products/999999');
+
+      expect(response.status).toBe(404);
+    });
+
+    it('should return 404 when the product has been soft-deleted', async () => {
+      const product = await Product.create(buildProduct());
+      await product.destroy();
+
+      const response = await request(app.getHttpServer()).get(`/api/v1/products/${product.id}`);
+
+      expect(response.status).toBe(404);
+    });
+
+    it('should return 400 when the id is not a valid integer', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products/not-a-number');
+
+      expect(response.status).toBe(400);
+    });
+  });
 });

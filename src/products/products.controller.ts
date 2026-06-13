@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Query } from '@nestjs/common';
+import { Controller, Post, Get, Body, Query, Param, ParseIntPipe } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductRequestDto, GetProductsQueryDto } from './dtos/products.request.dto';
 import { ProductResponseDto, PaginationResponseDto } from './dtos/products.response.dto';
@@ -30,5 +30,16 @@ export class ProductsController {
   @Get()
   findAll(@Query() query: GetProductsQueryDto): Promise<PaginationResponseDto> {
     return this.productsService.findAll(query);
+  }
+
+  /**
+   * Retrieves a single product by its identifier.
+   *
+   * @param id - The product identifier.
+   * @returns The product as a response DTO.
+   */
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number): Promise<ProductResponseDto> {
+    return this.productsService.findOne(id);
   }
 }

@@ -115,13 +115,13 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T031 [P] [US3] Write unit tests for ProductsService.findOne: product found, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
-- [ ] T032 [P] [US3] Write e2e tests for GET /api/v1/products/:id: existing product (200), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
+- [x] T031 [P] [US3] Write unit tests for ProductsService.findOne: product found, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
+- [x] T032 [P] [US3] Write e2e tests for GET /api/v1/products/:id: existing product (200), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
 
 ### Implementation for User Story 3
 
-- [ ] T033 [US3] Implement findOne method in ProductsService: find by primary key, throw NotFoundException if not found in src/products/products.service.ts
-- [ ] T034 [US3] Implement GET /products/:id endpoint in ProductsController: accept id param with ParseIntPipe, delegate to service, return 200 with ProductResponseDto in src/products/products.controller.ts
+- [x] T033 [US3] Implement findOne method in ProductsService: find by primary key, throw NotFoundException if not found in src/products/products.service.ts
+- [x] T034 [US3] Implement GET /products/:id endpoint in ProductsController: accept id param with ParseIntPipe, delegate to service, return 200 with ProductResponseDto in src/products/products.controller.ts
 
 **Checkpoint**: User Stories 1, 2, AND 3 are functional — full read path for products is complete
 

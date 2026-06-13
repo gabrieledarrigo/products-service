@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, jest } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getModelToken } from '@nestjs/sequelize';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import { UniqueConstraintError } from 'sequelize';
 import { ProductsService } from './products.service';
 import { Product } from './products.model';
@@ -17,6 +17,7 @@ describe('ProductsService', () => {
     productModel = createMock<typeof Product>({
       create: jest.fn(),
       findAndCountAll: jest.fn(),
+      findByPk: jest.fn(),
     });
 
     const module: TestingModule = await Test.createTestingModule({
@@ -152,6 +153,37 @@ describe('ProductsService', () => {
         totalPages: 0,
         limit: 20,
       });
+    });
+  });
+
+  describe('findOne', () => {
+    it('should return the product when it exists', async () => {
+      const product = createMock<Product>({
+        id: 1,
+        name: 'Widget Pro',
+        productToken: '550e8400-e29b-41d4-a716-446655440000',
+        price: 29.99,
+        stock: 100,
+      });
+      jest.mocked(productModel.findByPk).mockResolvedValue(product);
+
+      const result = await service.findOne(1);
+
+      expect(productModel.findByPk).toHaveBeenCalledWith(1);
+      expect(result).toBeInstanceOf(ProductResponseDto);
+      expect(result).toMatchObject({
+        id: 1,
+        name: 'Widget Pro',
+        productToken: '550e8400-e29b-41d4-a716-446655440000',
+        price: 29.99,
+        stock: 100,
+      });
+    });
+
+    it('should throw NotFoundException when the product does not exist', async () => {
+      jest.mocked(productModel.findByPk).mockResolvedValue(null);
+
+      await expect(service.findOne(999)).rejects.toThrow(NotFoundException);
     });
   });
 });

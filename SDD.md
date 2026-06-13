@@ -1,5 +1,7 @@
 # SDD
 
+A human written series of prompts I used for each phase of Spec-Driven Development [with Spec Kit](https://github.com/github/spec-kit).
+
 ## Constitution
 
 This application is a microservice called "products-service" for an e-commerce platform.
@@ -135,7 +137,7 @@ The project uses the NestJS layered architecture consisting in a single module c
 ├── ...
 ```
 
-## Database and data model
+### Database and data model
 
 The database is MySQL and Sequelize is used as the ORM. Docker compose is used to manage the MySQL database in a containerized environment for the local development and testing.
 
@@ -157,7 +159,7 @@ The following indexes are applied to the `products` table:
 Configure the Sequelize model to use soft deletes by enabling the `paranoid` option, to automatically set the `deletedAt` timestamp when a product is deleted instead of permanently removing it from the database.
 Migrations are configured in NestJS with `synchronization` enabled.
 
-## DTOs and Validation
+### DTOs and Validation
 
 Request DTOs use `class-validator` decorators to enforce validation rules on incoming request payloads. Request DTOS don't provide a constructor, and every mandatory property is marked with the `!` operator to indicate that it will be initialized by the framework during validation.
 
@@ -188,11 +190,11 @@ Validation is applied globally with the `ValidationPipe` with the following conf
 
 `ValidationPipe` is applied globally in the `main.ts` file.
 
-## Versioning
+### Versioning
 
 The application API endpoints are versioned using URI versioning through Nest.js enableVersioning method in the `main.ts` file. The default version is set to `1`. The default API prefix is set to `api`.
 
-## Configuration
+### Configuration
 
 The application uses `dotenv` to manage environment variables for database connection and other configurations. The `.env` file defines the following variables.
 
@@ -216,12 +218,12 @@ The application reads the configuration using the `@nestjs/config` module and pr
 - `development`: for development deployment
 - `production`: for production deployment
 
-## Error Handling
+### Error Handling
 
 Errors are exposed to clients by using NestJS's built-in HTTP exceptions.
 Explicit error handling is implemented in the service layer; for example, when creating a product, check if a product with the same `productToken` already exists and throw a `ConflictException` if it does. When updating stock or deleting a product, check if the product exists and is not soft-deleted before performing the operation, throwing a `NotFoundException` if it doesn't exist.
 
-## Logging
+### Logging
 
 The application uses `nestjs-pino` for structured JSON logging.
 All requests are logged with method, URL, status code, and response time. All errors are logged with their stack trace for debugging purposes, but stack traces are not exposed to clients in error responses.
@@ -232,7 +234,7 @@ Log levels:
 - `log`
 - `debug` Disabled in the production environment
 
-## Testing
+### Testing
 
 Testing are written with Jest and `@nestjs/testing`. Jest is configured to clean, reset and restore mocks between each test globally. Every test file is named with the `.spec.ts` suffix and is located in the same directory as the file it tests.
 
@@ -258,13 +260,13 @@ export function createMock<T extends object>(values?: PartialDeep<T>): T {
 
 Unit tests are written for the service layer. End-to-end tests to cover the entire HTTP lifecycle using `supertest` with `INestApplication` and are written for the controller layer. For end-to-end tests, `testcontainers` must be used to spin up a MySQL container for testing against a real database instance. The testing database must be properly cleaned between tests to maintain test isolation by truncating the `products` table after each test.
 
-## Documentation
+### Documentation
 
-### JSDoc Comments
+#### JSDoc Comments
 
 All classes and methods must be documented with JSDoc comments, including descriptions of parameters, eventual errors, and return values.
 
-### OpenAPI Documentation
+#### OpenAPI Documentation
 
 The application exposes OpenAPI documentation with Swagger using the `@nestjs/swagger` module through the `/api/docs` endpoint. The `/api/docs.json` endpoint exposes the documentation in JSON format.
 
@@ -272,13 +274,13 @@ Controllers and DTOs must not be decorated if not necessary, since the `@nestjs/
 
 https://docs.nestjs.com/openapi/cli-plugin#using-the-cli-plugin
 
-## Development
+### Development
 
 The application is developed with a test-first approach, following the TDD cycle of red-green-refactor. All tests must pass before merging any code changes.
 
 The repository should be configured with a pre-commit hook using `husky` and `lint-staged` to run linting and formatting checks before allowing commits.
 
-### Commands
+#### Commands
 
 - `npm run typecheck`: checks the TypeScript types.
 - `npm run build`: builds the application for production.
@@ -290,7 +292,7 @@ The repository should be configured with a pre-commit hook using `husky` and `li
 - `npm run format`: runs Prettier to check for code formatting issues.
 - `npm run start:dev`: starts the application in development mode with hot-reloading.
 
-### CI/CD
+#### CI/CD
 
 The application is built on every commit to the remote repository with a dedicated GitHub Action workflow. The workflow:
 

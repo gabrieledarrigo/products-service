@@ -368,4 +368,45 @@ describe('Products (e2e)', () => {
       expect(response.status).toBe(400);
     });
   });
+
+  describe('DELETE /api/v1/products/:id', () => {
+    it('should soft-delete an existing product and return 204', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer()).delete(`/api/v1/products/${product.id}`);
+
+      expect(response.status).toBe(204);
+      expect(response.body).toEqual({});
+    });
+
+    it('should exclude a deleted product from subsequent retrieval', async () => {
+      const product = await Product.create(buildProduct());
+
+      await request(app.getHttpServer()).delete(`/api/v1/products/${product.id}`);
+      const getResponse = await request(app.getHttpServer()).get(`/api/v1/products/${product.id}`);
+
+      expect(getResponse.status).toBe(404);
+    });
+
+    it('should return 204 when deleting an already-deleted product (idempotent)', async () => {
+      const product = await Product.create(buildProduct());
+      await product.destroy();
+
+      const response = await request(app.getHttpServer()).delete(`/api/v1/products/${product.id}`);
+
+      expect(response.status).toBe(204);
+    });
+
+    it('should return 204 when deleting a non-existent product (idempotent)', async () => {
+      const response = await request(app.getHttpServer()).delete('/api/v1/products/999999');
+
+      expect(response.status).toBe(204);
+    });
+
+    it('should return 400 when the id is not a valid integer', async () => {
+      const response = await request(app.getHttpServer()).delete('/api/v1/products/not-a-number');
+
+      expect(response.status).toBe(400);
+    });
+  });
 });

@@ -97,4 +97,16 @@ export class ProductsService {
 
     return new ProductResponseDto(updatedProduct);
   }
+
+  /**
+   * Soft-deletes a product by its identifier.
+   *
+   * The operation is idempotent: deleting a non-existent or already-deleted
+   * product completes successfully without error.
+   *
+   * @param id - The product identifier.
+   */
+  async remove(id: number): Promise<void> {
+    await this.productModel.destroy({ where: { id } });
+  }
 }

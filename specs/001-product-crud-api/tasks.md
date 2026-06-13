@@ -160,13 +160,13 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T040 [P] [US5] Write unit tests for ProductsService.remove: successful soft-delete, already-deleted product (idempotent 204), non-existent product (idempotent 204) in src/products/products.service.spec.ts
-- [ ] T041 [P] [US5] Write e2e tests for DELETE /api/v1/products/:id: existing product (204), already-deleted product (204), non-existent product (204), invalid id format e.g. string (400), verify product excluded from GET after delete in e2e/products.spec.ts
+- [x] T040 [P] [US5] Write unit tests for ProductsService.remove: successful soft-delete, already-deleted product (idempotent 204), non-existent product (idempotent 204) in src/products/products.service.spec.ts
+- [x] T041 [P] [US5] Write e2e tests for DELETE /api/v1/products/:id: existing product (204), already-deleted product (204), non-existent product (204), invalid id format e.g. string (400), verify product excluded from GET after delete in e2e/products.spec.ts
 
 ### Implementation for User Story 5
 
-- [ ] T042 [US5] Implement remove method in ProductsService: attempt destroy, return void regardless of affected rows (idempotent) in src/products/products.service.ts
-- [ ] T043 [US5] Implement DELETE /products/:id endpoint in ProductsController: accept id param with ParseIntPipe, delegate to service, return 204 No Content in src/products/products.controller.ts
+- [x] T042 [US5] Implement remove method in ProductsService: attempt destroy, return void regardless of affected rows (idempotent) in src/products/products.service.ts
+- [x] T043 [US5] Implement DELETE /products/:id endpoint in ProductsController: accept id param with ParseIntPipe, delegate to service, return 204 No Content in src/products/products.controller.ts
 
 **Checkpoint**: All 5 user stories are functional — full CRUD with soft-delete is complete
 

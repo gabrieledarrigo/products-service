@@ -1,4 +1,16 @@
-import { Controller, Post, Get, Put, Body, Query, Param, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Get,
+  Put,
+  Delete,
+  Body,
+  Query,
+  Param,
+  ParseIntPipe,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import { ProductsService } from './products.service';
 import {
   CreateProductRequestDto,
@@ -60,5 +72,16 @@ export class ProductsController {
     @Body() dto: UpdateProductStockRequestDto,
   ): Promise<ProductResponseDto> {
     return this.productsService.updateStock(id, dto);
+  }
+
+  /**
+   * Soft-deletes a product. Idempotent — always returns 204 No Content.
+   *
+   * @param id - The product identifier.
+   */
+  @Delete(':id')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  remove(@Param('id', ParseIntPipe) id: number): Promise<void> {
+    return this.productsService.remove(id);
   }
 }

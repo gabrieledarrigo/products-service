@@ -18,6 +18,7 @@ describe('ProductsService', () => {
       create: jest.fn(),
       findAndCountAll: jest.fn(),
       findByPk: jest.fn(),
+      destroy: jest.fn(),
     });
 
     const module: TestingModule = await Test.createTestingModule({
@@ -216,6 +217,24 @@ describe('ProductsService', () => {
       jest.mocked(productModel.findByPk).mockResolvedValue(null);
 
       await expect(service.updateStock(999, { stock: 50 })).rejects.toThrow(NotFoundException);
+    });
+  });
+
+  describe('remove', () => {
+    it('should soft-delete the product when it exists', async () => {
+      jest.mocked(productModel.destroy).mockResolvedValue(1);
+
+      await service.remove(1);
+
+      expect(productModel.destroy).toHaveBeenCalledWith({ where: { id: 1 } });
+    });
+
+    it('should resolve without error when the product does not exist (idempotent)', async () => {
+      jest.mocked(productModel.destroy).mockResolvedValue(0);
+
+      await expect(service.remove(999)).resolves.toBeUndefined();
+
+      expect(productModel.destroy).toHaveBeenCalledWith({ where: { id: 999 } });
     });
   });
 });

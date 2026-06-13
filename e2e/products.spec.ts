@@ -1,4 +1,5 @@
 import { describe, it, expect, beforeAll, afterAll, afterEach } from '@jest/globals';
+import { randomUUID } from 'node:crypto';
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe, VersioningType } from '@nestjs/common';
 import request from 'supertest';
@@ -64,10 +65,6 @@ describe('Products (e2e)', () => {
   afterAll(async () => {
     await app.close();
     await container.stop();
-  });
-
-  it('should be defined', () => {
-    expect(app).toBeDefined();
   });
 
   describe('POST /api/v1/products', () => {
@@ -150,6 +147,112 @@ describe('Products (e2e)', () => {
         .send({ ...validPayload, name: 'Another Name' });
 
       expect(response.status).toBe(409);
+    });
+  });
+
+  describe('GET /api/v1/products', () => {
+    const buildProduct = (overrides: Partial<Product> = {}): Partial<Product> => ({
+      name: 'Widget Pro',
+      productToken: randomUUID(),
+      price: 29.99,
+      stock: 100,
+      ...overrides,
+    });
+
+    const seedProducts = async (count: number): Promise<void> => {
+      const products = Array.from({ length: count }, (_, index) => {
+        return buildProduct({ name: `Product ${index}` });
+      });
+
+      await Product.bulkCreate(products);
+    };
+
+    afterEach(async () => {
+      await Product.truncate({ force: true });
+    });
+
+    it('should return the first page with default pagination', async () => {
+      await seedProducts(3);
+
+      const response = await request(app.getHttpServer()).get('/api/v1/products');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        totalItems: 3,
+        currentPage: 1,
+        totalPages: 1,
+        limit: 20,
+      });
+      expect(response.body.products).toHaveLength(3);
+    });
+
+    it('should return the requested page with a custom page and limit', async () => {
+      await seedProducts(12);
+
+      const response = await request(app.getHttpServer()).get('/api/v1/products?page=2&limit=5');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        totalItems: 12,
+        currentPage: 2,
+        totalPages: 3,
+        limit: 5,
+      });
+      expect(response.body.products).toHaveLength(5);
+    });
+
+    it('should return an empty list when no products exist', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        totalItems: 0,
+        currentPage: 1,
+        totalPages: 0,
+        limit: 20,
+      });
+      expect(response.body.products).toEqual([]);
+    });
+
+    it('should return an empty list when page exceeds total pages', async () => {
+      await seedProducts(2);
+
+      const response = await request(app.getHttpServer()).get('/api/v1/products?page=5&limit=20');
+
+      expect(response.status).toBe(200);
+      expect(response.body.products).toEqual([]);
+      expect(response.body.totalItems).toBe(2);
+    });
+
+    it('should return 400 when limit exceeds the maximum', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products?limit=101');
+
+      expect(response.status).toBe(400);
+    });
+
+    it('should return 400 when limit is below the minimum', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products?limit=0');
+
+      expect(response.status).toBe(400);
+    });
+
+    it('should return 400 when page is below the minimum', async () => {
+      const response = await request(app.getHttpServer()).get('/api/v1/products?page=0');
+
+      expect(response.status).toBe(400);
+    });
+
+    it('should exclude soft-deleted products from the results', async () => {
+      await seedProducts(2);
+
+      const [productToDelete] = await Product.bulkCreate([buildProduct({ name: 'To Delete' })]);
+      await productToDelete.destroy();
+
+      const response = await request(app.getHttpServer()).get('/api/v1/products');
+
+      expect(response.status).toBe(200);
+      expect(response.body.totalItems).toBe(2);
+      expect(response.body.products).toHaveLength(2);
     });
   });
 });

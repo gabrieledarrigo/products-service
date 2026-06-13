@@ -1,7 +1,7 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Get, Body, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { CreateProductRequestDto } from './dtos/products.request.dto';
-import { ProductResponseDto } from './dtos/products.response.dto';
+import { CreateProductRequestDto, GetProductsQueryDto } from './dtos/products.request.dto';
+import { ProductResponseDto, PaginationResponseDto } from './dtos/products.response.dto';
 
 /**
  * Handle HTTP requests related to products.
@@ -19,5 +19,16 @@ export class ProductsController {
   @Post()
   create(@Body() dto: CreateProductRequestDto): Promise<ProductResponseDto> {
     return this.productsService.create(dto);
+  }
+
+  /**
+   * Retrieves a paginated list of products.
+   *
+   * @param query - The validated pagination parameters.
+   * @returns A paginated response containing products and metadata.
+   */
+  @Get()
+  findAll(@Query() query: GetProductsQueryDto): Promise<PaginationResponseDto> {
+    return this.productsService.findAll(query);
   }
 }

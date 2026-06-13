@@ -2,8 +2,8 @@ import { Injectable, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UniqueConstraintError } from 'sequelize';
 import { Product } from './products.model';
-import { CreateProductRequestDto } from './dtos/products.request.dto';
-import { ProductResponseDto } from './dtos/products.response.dto';
+import { CreateProductRequestDto, GetProductsQueryDto } from './dtos/products.request.dto';
+import { ProductResponseDto, PaginationResponseDto } from './dtos/products.response.dto';
 
 /**
  * Application service handling the business logic for product operations.
@@ -36,5 +36,24 @@ export class ProductsService {
     });
 
     return new ProductResponseDto(product);
+  }
+
+  /**
+   * Retrieves a paginated list of active products.
+   *
+   * @param query - The validated pagination parameters.
+   * @returns A paginated response containing products and pagination metadata.
+   */
+  async findAll(query: GetProductsQueryDto): Promise<PaginationResponseDto> {
+    const { page, limit } = query;
+
+    const { rows, count } = await this.productModel.findAndCountAll({
+      offset: query.getOffset(),
+      limit,
+    });
+
+    const products = rows.map((product) => new ProductResponseDto(product));
+
+    return new PaginationResponseDto(products, count, page, limit);
   }
 }

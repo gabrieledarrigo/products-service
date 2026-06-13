@@ -5,8 +5,8 @@ import { ConflictException } from '@nestjs/common';
 import { UniqueConstraintError } from 'sequelize';
 import { ProductsService } from './products.service';
 import { Product } from './products.model';
-import { CreateProductRequestDto } from './dtos/products.request.dto';
-import { ProductResponseDto } from './dtos/products.response.dto';
+import { CreateProductRequestDto, GetProductsQueryDto } from './dtos/products.request.dto';
+import { ProductResponseDto, PaginationResponseDto } from './dtos/products.response.dto';
 import { createMock } from '../test-utils/create-mock';
 
 describe('ProductsService', () => {
@@ -16,6 +16,7 @@ describe('ProductsService', () => {
   beforeEach(async () => {
     productModel = createMock<typeof Product>({
       create: jest.fn(),
+      findAndCountAll: jest.fn(),
     });
 
     const module: TestingModule = await Test.createTestingModule({
@@ -29,10 +30,6 @@ describe('ProductsService', () => {
     }).compile();
 
     service = module.get<ProductsService>(ProductsService);
-  });
-
-  it('should be defined', () => {
-    expect(service).toBeDefined();
   });
 
   describe('create', () => {
@@ -70,6 +67,91 @@ describe('ProductsService', () => {
       jest.mocked(productModel.create).mockRejectedValue(uniqueError);
 
       await expect(service.create(dto)).rejects.toThrow(ConflictException);
+    });
+  });
+
+  describe('findAll', () => {
+    it('should return a paginated list of products with metadata', async () => {
+      const query: GetProductsQueryDto = {
+        page: 1,
+        limit: 20,
+        getOffset: () => 0,
+      };
+
+      const products = [
+        createMock<Product>({ id: 1, name: 'Product 1' }),
+        createMock<Product>({ id: 2, name: 'Product 2' }),
+      ];
+
+      jest.mocked(productModel.findAndCountAll).mockResolvedValue({
+        rows: products,
+        count: 2,
+      } as unknown as Awaited<ReturnType<typeof productModel.findAndCountAll>>);
+
+      const result = await service.findAll(query);
+
+      expect(productModel.findAndCountAll).toHaveBeenCalledWith({
+        offset: 0,
+        limit: 20,
+      });
+      expect(result).toBeInstanceOf(PaginationResponseDto);
+      expect(result).toMatchObject({
+        totalItems: 2,
+        currentPage: 1,
+        totalPages: 1,
+        limit: 20,
+      });
+      expect(result.products).toHaveLength(2);
+      expect(result.products[0]).toBeInstanceOf(ProductResponseDto);
+    });
+
+    it('should compute the correct offset for a given page and limit', async () => {
+      const query: GetProductsQueryDto = {
+        page: 3,
+        limit: 5,
+        getOffset: () => 10,
+      };
+
+      jest.mocked(productModel.findAndCountAll).mockResolvedValue({
+        rows: [],
+        count: 12,
+      } as unknown as Awaited<ReturnType<typeof productModel.findAndCountAll>>);
+
+      const result = await service.findAll(query);
+
+      expect(productModel.findAndCountAll).toHaveBeenCalledWith({
+        offset: 10,
+        limit: 5,
+      });
+      expect(result).toMatchObject({
+        totalItems: 12,
+        currentPage: 3,
+        totalPages: 3,
+        limit: 5,
+      });
+    });
+
+    it('should return an empty list when no products exist', async () => {
+      const query: GetProductsQueryDto = {
+        page: 1,
+        limit: 20,
+        getOffset: () => 0,
+      };
+
+      jest.mocked(productModel.findAndCountAll).mockResolvedValue({
+        rows: [],
+        count: 0,
+      } as unknown as Awaited<ReturnType<typeof productModel.findAndCountAll>>);
+
+      const result = await service.findAll(query);
+
+      expect(result.products).toEqual([]);
+      expect(result).toMatchObject({
+        totalItems: 0,
+        currentPage: 1,
+        totalPages: 0,
+        limit: 20,
+      });
     });
   });
 });

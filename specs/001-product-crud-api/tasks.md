@@ -92,14 +92,14 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T026 [P] [US2] Write unit tests for ProductsService.findAll: returns paginated results, correct totalItems/totalPages, default page/limit, empty results in src/products/products.service.spec.ts
-- [ ] T027 [P] [US2] Write e2e tests for GET /api/v1/products: default pagination (200), custom page/limit (200), empty list (200), page exceeding total (200 empty), invalid limit (400), invalid page (400), excludes soft-deleted (200) in e2e/products.spec.ts
+- [x] T026 [P] [US2] Write unit tests for ProductsService.findAll: returns paginated results, correct totalItems/totalPages, default page/limit, empty results in src/products/products.service.spec.ts
+- [x] T027 [P] [US2] Write e2e tests for GET /api/v1/products: default pagination (200), custom page/limit (200), empty list (200), page exceeding total (200 empty), invalid limit (400), invalid page (400), excludes soft-deleted (200) in e2e/products.spec.ts
 
 ### Implementation for User Story 2
 
-- [ ] T028 [P] [US2] Create GetProductsQueryDto with @IsOptional, @IsInt, @Min(1), @Max(100), @Type(() => Number) decorators and defaults (page=1, limit=20) in src/products/dtos/products.request.dto.ts
-- [ ] T029 [US2] Implement findAll method in ProductsService with findAndCountAll, offset/limit calculation, and PaginationResponseDto mapping in src/products/products.service.ts
-- [ ] T030 [US2] Implement GET /products endpoint in ProductsController: accept GetProductsQueryDto query params, delegate to service, return 200 with PaginationResponseDto in src/products/products.controller.ts
+- [x] T028 [P] [US2] Create GetProductsQueryDto with @IsOptional, @IsInt, @Min(1), @Max(100), @Type(() => Number) decorators and defaults (page=1, limit=20) in src/products/dtos/products.request.dto.ts
+- [x] T029 [US2] Implement findAll method in ProductsService with findAndCountAll, offset/limit calculation, and PaginationResponseDto mapping in src/products/products.service.ts
+- [x] T030 [US2] Implement GET /products endpoint in ProductsController: accept GetProductsQueryDto query params, delegate to service, return 200 with PaginationResponseDto in src/products/products.controller.ts
 
 **Checkpoint**: User Stories 1 AND 2 are functional — clients can create and list products with pagination
 

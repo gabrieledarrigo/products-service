@@ -11,12 +11,10 @@ import {
   UpdatedAt,
   DeletedAt,
 } from 'sequelize-typescript';
+import { PRODUCT_PRICE_PRECISION, PRODUCT_PRICE_SCALE } from './constants';
 
 /**
  * Sequelize model representing a product in the e-commerce catalog.
- *
- * Uses paranoid mode for soft-delete support — records are not permanently
- * removed but have their `deletedAt` timestamp set instead.
  */
 @Table({
   tableName: 'products',
@@ -34,7 +32,7 @@ export class Product extends Model {
   /** Client-provided UUID v4 token, unique across all products including soft-deleted ones. */
   @Unique
   @AllowNull(false)
-  @Column(DataType.STRING(36))
+  @Column(DataType.UUID)
   declare productToken: string;
 
   /** Product display name. */
@@ -44,7 +42,7 @@ export class Product extends Model {
 
   /** Unit price with up to 4 decimal places. */
   @AllowNull(false)
-  @Column(DataType.DECIMAL(10, 4))
+  @Column(DataType.DECIMAL(PRODUCT_PRICE_PRECISION, PRODUCT_PRICE_SCALE))
   declare price: number;
 
   /** Available inventory quantity. */

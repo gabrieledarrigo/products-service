@@ -79,3 +79,12 @@ export class GetProductsQueryDto {
     return (this.page - 1) * this.limit;
   }
 }
+
+export class UpdateProductStockRequestDto {
+  /**
+   * New available inventory quantity, non-negative integer.
+   */
+  @IsInt()
+  @Min(MIN_PRODUCT_STOCK)
+  readonly stock!: number;
+}

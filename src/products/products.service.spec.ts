@@ -186,4 +186,36 @@ describe('ProductsService', () => {
       await expect(service.findOne(999)).rejects.toThrow(NotFoundException);
     });
   });
+
+  describe('updateStock', () => {
+    it('should update the stock and return the updated product', async () => {
+      const product = createMock<Product>({
+        id: 1,
+        name: 'Widget Pro',
+        productToken: '550e8400-e29b-41d4-a716-446655440000',
+        price: 29.99,
+        stock: 100,
+        update: jest.fn(),
+      });
+      const updatedProduct = createMock<Product>({
+        ...product,
+        stock: 50,
+      });
+      jest.mocked(productModel.findByPk).mockResolvedValue(product);
+      jest.mocked(product.update).mockResolvedValue(updatedProduct);
+
+      const result = await service.updateStock(1, { stock: 50 });
+
+      expect(productModel.findByPk).toHaveBeenCalledWith(1);
+      expect(product.update).toHaveBeenCalledWith({ stock: 50 });
+      expect(result).toBeInstanceOf(ProductResponseDto);
+      expect(result).toMatchObject({ id: 1, stock: 50 });
+    });
+
+    it('should throw NotFoundException when the product does not exist', async () => {
+      jest.mocked(productModel.findByPk).mockResolvedValue(null);
+
+      await expect(service.updateStock(999, { stock: 50 })).rejects.toThrow(NotFoundException);
+    });
+  });
 });

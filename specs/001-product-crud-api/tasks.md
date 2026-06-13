@@ -137,14 +137,14 @@
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T035 [P] [US4] Write unit tests for ProductsService.updateStock: successful update with updatedAt change, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
-- [ ] T036 [P] [US4] Write e2e tests for PUT /api/v1/products/:id/stock: valid update (200), stock=0 boundary value (200), negative stock (400), missing stock field (400), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
+- [x] T035 [P] [US4] Write unit tests for ProductsService.updateStock: successful update with updatedAt change, product not found (NotFoundException), soft-deleted product (NotFoundException) in src/products/products.service.spec.ts
+- [x] T036 [P] [US4] Write e2e tests for PUT /api/v1/products/:id/stock: valid update (200), stock=0 boundary value (200), negative stock (400), missing stock field (400), non-existent product (404), soft-deleted product (404), invalid id format e.g. string (400) in e2e/products.spec.ts
 
 ### Implementation for User Story 4
 
-- [ ] T037 [P] [US4] Create UpdateProductStockRequestDto with @IsInt, @Min(0) decorators for stock field in src/products/dtos/products.request.dto.ts
-- [ ] T038 [US4] Implement updateStock method in ProductsService: find product, update stock, save, return updated product in src/products/products.service.ts
-- [ ] T039 [US4] Implement PUT /products/:id/stock endpoint in ProductsController: accept id param with ParseIntPipe and UpdateProductStockRequestDto body, delegate to service, return 200 with ProductResponseDto in src/products/products.controller.ts
+- [x] T037 [P] [US4] Create UpdateProductStockRequestDto with @IsInt, @Min(0) decorators for stock field in src/products/dtos/products.request.dto.ts
+- [x] T038 [US4] Implement updateStock method in ProductsService: find product, update stock, save, return updated product in src/products/products.service.ts
+- [x] T039 [US4] Implement PUT /products/:id/stock endpoint in ProductsController: accept id param with ParseIntPipe and UpdateProductStockRequestDto body, delegate to service, return 200 with ProductResponseDto in src/products/products.controller.ts
 
 **Checkpoint**: User Stories 1-4 are functional — full CRUD minus delete is complete
 

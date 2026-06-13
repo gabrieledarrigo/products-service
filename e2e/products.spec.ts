@@ -67,6 +67,14 @@ describe('Products (e2e)', () => {
     await container.stop();
   });
 
+  const buildProduct = (overrides: Partial<Product> = {}): Partial<Product> => ({
+    name: 'Widget Pro',
+    productToken: randomUUID(),
+    price: 29.99,
+    stock: 100,
+    ...overrides,
+  });
+
   describe('POST /api/v1/products', () => {
     const validPayload: CreateProductRequestDto = {
       name: 'Widget Pro',
@@ -151,14 +159,6 @@ describe('Products (e2e)', () => {
   });
 
   describe('GET /api/v1/products', () => {
-    const buildProduct = (overrides: Partial<Product> = {}): Partial<Product> => ({
-      name: 'Widget Pro',
-      productToken: randomUUID(),
-      price: 29.99,
-      stock: 100,
-      ...overrides,
-    });
-
     const seedProducts = async (count: number): Promise<void> => {
       const products = Array.from({ length: count }, (_, index) => {
         return buildProduct({ name: `Product ${index}` });
@@ -257,14 +257,6 @@ describe('Products (e2e)', () => {
   });
 
   describe('GET /api/v1/products/:id', () => {
-    const buildProduct = (overrides: Partial<Product> = {}): Partial<Product> => ({
-      name: 'Widget Pro',
-      productToken: randomUUID(),
-      price: 29.99,
-      stock: 100,
-      ...overrides,
-    });
-
     it('should return the product when it exists', async () => {
       const product = await Product.create(buildProduct());
 
@@ -298,6 +290,80 @@ describe('Products (e2e)', () => {
 
     it('should return 400 when the id is not a valid integer', async () => {
       const response = await request(app.getHttpServer()).get('/api/v1/products/not-a-number');
+
+      expect(response.status).toBe(400);
+    });
+  });
+
+  describe('PUT /api/v1/products/:id/stock', () => {
+    it('should update the stock and return 200 with the updated product', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer())
+        .put(`/api/v1/products/${product.id}/stock`)
+        .send({ stock: 50 });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        id: product.id,
+        stock: 50,
+      });
+    });
+
+    it('should accept a stock of 0 as a valid value', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer())
+        .put(`/api/v1/products/${product.id}/stock`)
+        .send({ stock: 0 });
+
+      expect(response.status).toBe(200);
+      expect(response.body.stock).toBe(0);
+    });
+
+    it('should return 400 when the stock is negative', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer())
+        .put(`/api/v1/products/${product.id}/stock`)
+        .send({ stock: -1 });
+
+      expect(response.status).toBe(400);
+    });
+
+    it('should return 400 when the stock field is missing', async () => {
+      const product = await Product.create(buildProduct());
+
+      const response = await request(app.getHttpServer())
+        .put(`/api/v1/products/${product.id}/stock`)
+        .send({});
+
+      expect(response.status).toBe(400);
+    });
+
+    it('should return 404 when the product does not exist', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/api/v1/products/999999/stock')
+        .send({ stock: 50 });
+
+      expect(response.status).toBe(404);
+    });
+
+    it('should return 404 when the product has been soft-deleted', async () => {
+      const product = await Product.create(buildProduct());
+      await product.destroy();
+
+      const response = await request(app.getHttpServer())
+        .put(`/api/v1/products/${product.id}/stock`)
+        .send({ stock: 50 });
+
+      expect(response.status).toBe(404);
+    });
+
+    it('should return 400 when the id is not a valid integer', async () => {
+      const response = await request(app.getHttpServer())
+        .put('/api/v1/products/not-a-number/stock')
+        .send({ stock: 50 });
 
       expect(response.status).toBe(400);
     });

@@ -2,7 +2,11 @@ import { Injectable, ConflictException, NotFoundException } from '@nestjs/common
 import { InjectModel } from '@nestjs/sequelize';
 import { UniqueConstraintError } from 'sequelize';
 import { Product } from './products.model';
-import { CreateProductRequestDto, GetProductsQueryDto } from './dtos/products.request.dto';
+import {
+  CreateProductRequestDto,
+  GetProductsQueryDto,
+  UpdateProductStockRequestDto,
+} from './dtos/products.request.dto';
 import { ProductResponseDto, PaginationResponseDto } from './dtos/products.response.dto';
 
 /**
@@ -72,5 +76,25 @@ export class ProductsService {
     }
 
     return new ProductResponseDto(product);
+  }
+
+  /**
+   * Updates the stock quantity of an existing active product.
+   *
+   * @param id - The product identifier.
+   * @param dto - The validated stock update payload.
+   * @returns The updated product as a response DTO.
+   * @throws NotFoundException when no active product exists with the given id.
+   */
+  async updateStock(id: number, dto: UpdateProductStockRequestDto): Promise<ProductResponseDto> {
+    const product = await this.productModel.findByPk(id);
+
+    if (!product) {
+      throw new NotFoundException('Product not found');
+    }
+
+    const updatedProduct = await product.update({ stock: dto.stock });
+
+    return new ProductResponseDto(updatedProduct);
   }
 }

@@ -93,8 +93,10 @@ describe('Products (e2e)', () => {
         id: expect.any(Number),
         productToken: validPayload.productToken,
         name: validPayload.name,
+        price: validPayload.price,
         stock: validPayload.stock,
       });
+      expect(typeof response.body.price).toBe('number');
       expect(response.body.createdAt).toBeDefined();
       expect(response.body.updatedAt).toBeDefined();
     });

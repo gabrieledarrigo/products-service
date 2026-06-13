@@ -43,7 +43,7 @@ export class ProductResponseDto {
     this.id = product.id;
     this.productToken = product.productToken;
     this.name = product.name;
-    this.price = product.price;
+    this.price = Number(product.price);
     this.stock = product.stock;
     this.createdAt = product.createdAt;
     this.updatedAt = product.updatedAt;

@@ -176,11 +176,11 @@
 
 **Purpose**: Documentation, validation, and final quality checks
 
-- [ ] T044 [P] Add JSDoc comments to all classes and public methods in src/products/ and src/app.module.ts
-- [ ] T045 [P] Verify OpenAPI documentation is generated correctly at /docs and /docs-json endpoints
-- [ ] T046 Run quickstart.md validation scenarios against running application to verify all endpoints
-- [ ] T047 [P] Verify test coverage: confirm every functional requirement (FR-001 through FR-019) has at least one corresponding test case across unit and e2e test files (SC-008)
-- [ ] T048 [P] Final typecheck (npm run typecheck), lint (npm run lint), and format (npm run format) pass
+- [x] T044 [P] Add JSDoc comments to all classes and public methods in src/products/ and src/app.module.ts
+- [x] T045 [P] Verify OpenAPI documentation is generated correctly at /docs and /docs-json endpoints
+- [x] T046 Run quickstart.md validation scenarios against running application to verify all endpoints
+- [x] T047 [P] Verify test coverage: confirm every functional requirement (FR-001 through FR-019) has at least one corresponding test case across unit and e2e test files (SC-008)
+- [x] T048 [P] Final typecheck (npm run typecheck), lint (npm run lint), and format (npm run format) pass
 
 ---
 

@@ -123,7 +123,7 @@ All technical decisions were provided explicitly in the feature description. No 
 
 - Enable the plugin in `nest-cli.json` under `compilerOptions.plugins`
 - Configure `"@nestjs/swagger"` plugin with `introspectComments: true` to pick up JSDoc comments
-- Expose docs at `/docs` and JSON at `/docs-json` (NestJS default path with `.json` suffix is `/docs-json`)
+- Expose docs at `/api/docs` and JSON at `/api/docs.json`
 - Set up SwaggerModule in `main.ts` with title, description, and version
 
 ## Idempotent DELETE Implementation

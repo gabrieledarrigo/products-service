@@ -266,7 +266,7 @@ All classes and methods must be documented with JSDoc comments, including descri
 
 ### OpenAPI Documentation
 
-The application exposes OpenAPI documentation with Swagger using the `@nestjs/swagger` module through the `/docs` endpoint. The `/docs.json` endpoint exposes the documentation in JSON format.
+The application exposes OpenAPI documentation with Swagger using the `@nestjs/swagger` module through the `/api/docs` endpoint. The `/api/docs.json` endpoint exposes the documentation in JSON format.
 
 Controllers and DTOs must not be decorated if not necessary, since the `@nestjs/swagger` CLI plugin use Typescript reflection to generate the documentation dinamically:
 

@@ -11,7 +11,7 @@ Represents an item in the e-commerce product catalog.
 | Field          | Type             | Constraints                 | Description                           |
 | -------------- | ---------------- | --------------------------- | ------------------------------------- |
 | `id`           | `INTEGER`        | Primary key, auto-increment | Unique identifier                     |
-| `productToken` | `STRING(36)`     | NOT NULL, UNIQUE index      | Client-provided UUID v4 token         |
+| `productToken` | `UUID`           | NOT NULL, UNIQUE index      | Client-provided UUID v4 token         |
 | `name`         | `STRING`         | NOT NULL                    | Product display name (non-empty)      |
 | `price`        | `DECIMAL(10, 4)` | NOT NULL, >= 0              | Unit price with 4 decimal places      |
 | `stock`        | `INTEGER`        | NOT NULL, >= 0              | Available inventory quantity          |

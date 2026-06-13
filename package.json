@@ -4,7 +4,7 @@
   "description": "products-service is a RESTful CRUD API for managing products in an e-commerce platform.",
   "main": "dist/main.js",
   "scripts": {
-    "prebuild": "rm -rf dist *.tsbuildinfo",
+    "prebuild": "rm -rf dist",
     "build": "nest build",
     "start": "nest start",
     "start:dev": "nest start --watch",

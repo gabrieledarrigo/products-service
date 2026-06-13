@@ -36,8 +36,8 @@ async function bootstrap(): Promise<void> {
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('docs', app, document, {
-    jsonDocumentUrl: 'docs.json',
+  SwaggerModule.setup('/api/docs', app, document, {
+    jsonDocumentUrl: '/api/docs.json',
   });
 
   const configService = app.get(ConfigService);

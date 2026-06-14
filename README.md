@@ -150,6 +150,7 @@ For the full interactive API documentation, see the [Swagger UI](http://localhos
 ## How the project was built
 
 The project was built applying specification-driven development (SDD) with [Spec Kit](https://github.com/github/spec-kit).  
+
 [SDD.md](./SDD.md) reports the prompts I wrote to drive each phase of development.  
 
 - [Constitution](./SDD.md#Constitution) reports the principles I decided to apply for the development of the project, especially focusing on simplicity, type safety, and convention over configuration

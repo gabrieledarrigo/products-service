@@ -40,7 +40,8 @@ To run tests:
 npm test
 ```
 
-The test suite includes unit and e2e tests covering all API endpoints and error scenarios. E2E tests use [testcontainers](https://node.testcontainers.org/) to spin up a real MySQL database for integration testing.
+The test suite includes unit and e2e tests covering all API endpoints and error scenarios.  
+E2E tests use [testcontainers](https://node.testcontainers.org/) to spin up a real MySQL database for integration testing.
 
 ## API Usage
 
@@ -148,8 +149,8 @@ For the full interactive API documentation, see the [Swagger UI](http://localhos
 
 ## How the project was built
 
-The project was built applying specification-driven development (SDD) with [Spec Kit](https://github.com/github/spec-kit).
-[SDD.md](./SDD.md) reports the prompts I wrote to drive each phase of development.
+The project was built applying specification-driven development (SDD) with [Spec Kit](https://github.com/github/spec-kit).  
+[SDD.md](./SDD.md) reports the prompts I wrote to drive each phase of development.  
 
 - [Constitution](./SDD.md#Constitution) reports the principles I decided to apply for the development of the project, especially focusing on simplicity, type safety, and convention over configuration
 - [Specification](./SDD.md#Specification) defines the specs I used to instruct the model with `/speckit.specify`. Read it to understand the design decisions I made in terms of API design, data model, and validation
